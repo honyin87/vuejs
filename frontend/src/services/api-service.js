@@ -4,6 +4,7 @@ class APIService {
 
     api_url = 'default';
     vue = null;
+    store = null;
 
     constructor(){
       this.api_url = process.env.VUE_APP_API_URL;
@@ -11,6 +12,7 @@ class APIService {
 
     init(vue){
       this.vue = vue;
+      this.store = this.vue.config.globalProperties.$store;
     }
 
     setURL(url){
@@ -25,10 +27,13 @@ class APIService {
       
       let headers = this.getHeaders();
       
-      config = {
+      let temp_config = {
         headers : headers
       };
-      const response = await axios.post(this.api_url+path, input,config)
+
+      let final_config = Object.assign(config, temp_config);
+      console.log(final_config);
+      const response = await axios.post(this.api_url+path, input,final_config)
       .catch ( (error)=>{
         return error.response;
        })
@@ -37,13 +42,13 @@ class APIService {
 
     getHeaders(){
       let headers = {};
-      console.log(this.vue.$store);
-      if(typeof(this.vue.$store.getters.getAccessToken) !== 'undefined'
-        && this.vue.$store.getters.getAccessToken !== null
+      console.log(this.store);
+      if(typeof(this.store.getters.getAccessToken) !== 'undefined'
+        && this.store.getters.getAccessToken !== null
       ){
-        console.log(this.vue.$store.getters.getAccessToken);
+        console.log(this.store.getters.getAccessToken);
 
-        headers['Authorization'] = "Bearer "+this.vue.$store.getters.getAccessToken;
+        headers['Authorization'] = "Bearer "+this.store.getters.getAccessToken;
       }
 
 

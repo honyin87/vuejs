@@ -29,10 +29,11 @@ class Authentication extends BaseController
         $refresh_token = $this->gen_refresh_token($data);
 
 
-        helper("cookie");
+        
 
         // store a cookie value
         set_cookie(REFRESH_TOKEN_NAME, json_encode($refresh_token['token']), $refresh_token['duration'],"","/","",false,true);
+
 
         // get cookie value
         // array_debug(get_cookie("username"));
@@ -100,6 +101,25 @@ class Authentication extends BaseController
         );
 
         return $result;
+    }
+
+    public function verify_auth($access_token = ""){
+
+        enable_cors_header();
+
+        $request = service('request');
+
+        $post = $request->getVar();
+
+        if(isset($post->access_token)){
+            $access_token = $post->access_token;
+        }
+
+
+        if(empty($access_token)){
+            $refresh_token = get_cookie(REFRESH_TOKEN_NAME);
+            array_debug($refresh_token);exit;
+        }
     }
 
     public function test(){

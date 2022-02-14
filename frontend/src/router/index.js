@@ -1,20 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import api from '../services/api-service'
+import store from '../store'
 
 const routes = [
   {
     path: '/',
+    name: 'Default',
+    redirect: "/home",
+  },
+  {
+    path: '/home',
     name: 'Home',
     meta:{
       // needLogin : false,
       layout : 'AppLayoutDefault'
     },
-    component: () => import('../views/Home.vue'),
-    
-    beforeRouteEnter (to, from, next){
-      debugger
-      next({ name: 'About' });
-    }
+    component: () => import('../views/Home.vue')
   },
   {
     path: '/about',
@@ -53,20 +53,44 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  // debugger
-  if(to.meta && to.meta.needLogin == false){
-    next()
-  }else{
-    console.log(to);
+
+export default {
+  install(app) {
+    router.install(app);
     
-    // api.sendRequest();
+    router.beforeEach((to, from, next) => {
+      // debugger
+      if(to.meta && to.meta.needLogin == false){
+        next()
+      }else{
+        console.log(store);
+        
+        if(typeof(store.getters.getAccessToken) !== 'undefined'
+            && store.getters.getAccessToken !== null
+          ){
+            console.log(store.getters.getAccessToken);
+
+            next()
+          }else{
+            // Get Access Token by calling API
+            let auth = app.config.globalProperties.$auth;
+            console.log(auth);
+            
+            // Check user login status
+            if(auth.isAuth()){
+              next()
+            }else{
+              next({ name: 'Login' })
+            }
+            
+          }
+        
+        
+      }
+      
     
-    next({ name: 'Login' })
+
+    })
   }
-  
- 
-
-})
-
-export default router
+};
+//export default router

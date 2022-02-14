@@ -233,6 +233,11 @@
 // import authentication from '../services/authenticate-service'
 
 export default {
-  name: 'Header'
+  name: 'Header',
+  mounted(){
+    document.querySelector('.toggle-sidebar-btn').addEventListener('click', ()=>{
+      document.querySelector('body').classList.toggle('toggle-sidebar');
+    })
+  }
 }
 </script>

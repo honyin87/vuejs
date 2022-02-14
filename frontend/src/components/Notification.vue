@@ -1,7 +1,7 @@
 <template>
  
     <!-- ======= Notification ======= -->
-    <div  v-if="msg" class="alert alert-dismissible fade show" :class="[typePrefix+type]" role="alert">
+    <div  v-if="msg" class="alert alert-dismissible fade show w-100" :class="[typePrefix+type]" role="alert">
       <i class="bi me-1" :class="[icon]"></i>
       {{msg}}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

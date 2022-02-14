@@ -30,7 +30,8 @@ if(!function_exists('enable_cors_header')){
 
             $allow_domain = $domain;
             header('Access-Control-Allow-Origin: '.$allow_domain);
-            header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Access-Control-Requested-Method, Authorization");
+            header('Access-Control-Allow-Credentials: true');
+            header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Access-Control-Requested-Method, Authorization, Cookie");
             // header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PATCH, PUT, DELETE");
 
             // $headers['Access-Control-Allow-Origin'] = $allow_domain;
