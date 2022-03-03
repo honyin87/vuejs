@@ -49,7 +49,7 @@ class AuthenticateService {
     }
 
     // To verify user login status
-    isAuth(){
+    async isAuth(){
 
       let access_token = this.store.getters.getAccessToken;
 
@@ -61,9 +61,7 @@ class AuthenticateService {
           access_token : access_token,
         };
       
-        let response = this.api.post(url,input,{withCredentials: true,crossDomain: true,headers: {
-          Cookie: "ci_session=xxx",
-        },})
+        let response = await this.api.post(url,input,{withCredentials: true,crossDomain: true,})
         .then((response)=>{
           console.log(response);
 
@@ -73,20 +71,20 @@ class AuthenticateService {
 
             this.store.commit('setAccessToken',response.data.access_token);
 
-            // Create Success Message
-            let msg = {
-              'msg' : "Welcome, "+ response.data.payload.username,
-            };
+            // // Create Success Message
+            // let msg = {
+            //   'msg' : "Welcome, "+ response.data.payload.username,
+            // };
 
-            this.store.commit('setMessage',msg);
+            // this.store.commit('setMessage',msg);
 
-            return true;
+            return Promise.resolve(true);
           }else{
-            return response.status;
+            return Promise.resolve(response.status);
           }
         })
         .catch ( (error)=>{
-          return error.response;
+          return Promise.resolve(error.response);
         })
         return response;
       }

@@ -5,6 +5,7 @@ import store from './store'
 import api_plugin from '@/plugins/api-plugin'
 import auth_plugin from '@/plugins/authentication-plugin'
 import AppLayout from './layouts/AppLayout'
+import './assets/tailwind.css'
 
 const app =  createApp(App)
 

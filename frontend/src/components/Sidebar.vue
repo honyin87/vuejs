@@ -6,10 +6,12 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/home">
+        <!-- <a  href="/home"> -->
+        <router-link to="/home" class="nav-link collapsed">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
-        </a>
+        </router-link>
+        <!-- </a> -->
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
@@ -227,10 +229,10 @@
       </li><!-- End Error 404 Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " href="pages-blank.html">
+        <router-link to="/about" class="nav-link collapsed">
           <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
+          <span>About</span>
+        </router-link>
       </li><!-- End Blank Page Nav -->
 
     </ul>

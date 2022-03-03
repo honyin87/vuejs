@@ -20,7 +20,7 @@ const routes = [
     path: '/about',
     name: 'About',
     meta:{
-      needLogin : false,
+      // needLogin : false,
       layout : 'AppLayoutDefault'
     },
     // route level code-splitting
@@ -58,13 +58,14 @@ export default {
   install(app) {
     router.install(app);
     
-    router.beforeEach((to, from, next) => {
+    router.beforeEach(async (to, from, next) => {
+      
       // debugger
       if(to.meta && to.meta.needLogin == false){
         next()
       }else{
-        console.log(store);
-        
+        // console.log(store);
+        console.log("Check token..");
         if(typeof(store.getters.getAccessToken) !== 'undefined'
             && store.getters.getAccessToken !== null
           ){
@@ -77,9 +78,12 @@ export default {
             console.log(auth);
             
             // Check user login status
-            if(auth.isAuth()){
+            let response = await auth.isAuth();
+            if(response == true){
+              //console.log("here.."+response);
               next()
             }else{
+              //console.log("no.."+response);
               next({ name: 'Login' })
             }
             

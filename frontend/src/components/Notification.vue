@@ -9,6 +9,7 @@
     <!-- ======= End Notification ======= -->
 </template>
 <script>
+import jquery from "jquery";
 export default {
   name: 'Notification',
   data(){
@@ -20,7 +21,7 @@ export default {
     };
   },
   created(){
-
+      console.log(jquery("body"));
       if(typeof(this.$store.getters.getMessage) !== 'undefined'
         && this.$store.getters.getMessage !== null
       ){
@@ -53,7 +54,10 @@ export default {
 
       }
 
-    
+    // Auto close notification
+    setTimeout(function() {
+        jquery(".alert .btn-close").trigger('click');
+    }, 5000);
   }
 }
 </script>
